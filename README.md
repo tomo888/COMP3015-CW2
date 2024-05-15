@@ -16,3 +16,5 @@ In terms of how the program functions and what each part of it does, below is a 
 - basic_uniform.frag: Perhaps the file that has undergone the most change, this receives data regarding the geomeotry of the scene from the vertex shader before then handling the calculations necessarry to make the PBR lighting function as intended in the scene. It's also responsible for handling texture mapping and computing colours for each fragment/pixel in the scene.
 
 To open the .exe files and see the application in action, the user should navigate to the Release folder found in the project directory - x64 -> Release, and then click on 'Project_Template.exe'.
+
+The Project Solution file can be found Project_Template.sln, at the top of the file directory (ie. with the other project folders such as media etc).

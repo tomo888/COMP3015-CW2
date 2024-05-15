@@ -1,0 +1,12 @@
+# Blender 3.6.8 MTL File: 'comp3000 basic humanoid (wip).blend'
+# www.blender.org
+
+newmtl Material
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/FM Account/Downloads/ImphenziaPalette02-Albedo.png
+map_Ke C:/Users/FM Account/Downloads/ImphenziaPalette02-Emission.png

@@ -3,9 +3,12 @@
 const float PI = 3.14159265358979323846;
 
 layout(location = 0) out vec4 FragColor;
+layout(binding = 0) uniform sampler2D Tex1;
 
 in vec3 Position;
 in vec3 Normal;
+
+in vec2 TexCoord;
 
 uniform struct LightInfo {
     vec4 Position; 
@@ -46,7 +49,8 @@ vec3 schlickFresnel(float lDotH)
 
 vec3 microfacetModel (int lightIdx, vec3 position, vec3 n)
 {
-    vec3 diffuseBrdf = vec3(0.0);
+    vec3 texColor = texture(Tex1, TexCoord).rgb;
+    vec3 diffuseBrdf = texColor;
     if (!Material.Metal)
     {
         diffuseBrdf = Material.Color;
@@ -74,7 +78,6 @@ vec3 microfacetModel (int lightIdx, vec3 position, vec3 n)
     float nDotL = max(dot(n, l), 0.0);
     float nDotV = dot(n, v);
     vec3 specBrdf = 0.25 * ggxDistribution(nDotH) * schlickFresnel(lDotH) * geomSmith(nDotL) * geomSmith(nDotV);
-
     return (diffuseBrdf + PI * specBrdf) * lightI * nDotL;
 }
 

@@ -20,8 +20,8 @@ private:
     void setMatrices();
     void compile();
     void drawScene();
-    void drawRoom();
-    void drawSpot(const glm::vec3& pos, float rough, int metal, const glm::vec3& color);
+    void drawRoom(float rough, int metal, const glm::vec3& color);
+    void drawModel();
 
 public:
     SceneBasic_Uniform();

@@ -32,11 +32,13 @@ void SceneBasic_Uniform::initScene()
 
 	glEnable(GL_DEPTH_TEST);
 
-	view = glm::lookAt(vec3(20.0f, 1.0f, 1.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	view = glm::lookAt(vec3(14.0f, 1.0f, 1.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 
 	projection = glm::perspective(glm::radians(50.0f), (float)width / height, 0.5f, 100.f);
 
-	lightAngle = 0.0f;
+
+
+	lightAngle = 80.0f;
 	lightRotationSpeed = 1.5f;
 
 	prog.setUniform("Light[0].L", glm::vec3(45.0f));
@@ -45,10 +47,6 @@ void SceneBasic_Uniform::initScene()
 	prog.setUniform("Light[1].Position", glm::vec4(0, 0.15f, -1.0f, 0));
 	prog.setUniform("Light[2].L", glm::vec3(45.0f));
 	prog.setUniform("Light[2].Position", view * glm::vec4(-7, 3, 7, 1));
-
-	GLuint texID = Texture::loadTexture("media/ImphenziaPalette02-Albedo.png");
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texID);
 }
 
 void SceneBasic_Uniform::compile()
@@ -113,37 +111,35 @@ void SceneBasic_Uniform::resize(int w, int h)
 
 void SceneBasic_Uniform::drawScene()
 {
-	drawRoom();
-
-	vec3 modelBaseColor(0.1f, 0.33f, 0.97f);
-	drawSpot(vec3(0.0f, 0.0f, 0.0f), 1.0f, 0, modelBaseColor);
-
+	drawModel();
+	drawRoom(0.3f, 1, glm::vec3(1, 0.71f, 0.29f));
 }
 
-void SceneBasic_Uniform::drawRoom()
+void SceneBasic_Uniform::drawRoom(float rough, int metal, const glm::vec3& color)
 {
 	model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(265.0f), vec3(0.0f, 1.0f, 0.0f));
 
-	prog.setUniform("Material.Rough", 0.9f);
-	prog.setUniform("Material.Metal", 0);
-	prog.setUniform("Material.Color", glm::vec3(0.2f));
+	prog.setUniform("Material.Rough", rough);
+	prog.setUniform("Material.Metal", metal);
+	prog.setUniform("Material.Color", color);
 	setMatrices();
 	mesh1->render();
 
 }
 
-void SceneBasic_Uniform::drawSpot(const glm::vec3& pos, float rough, int metal, const glm::vec3& color)
+void SceneBasic_Uniform::drawModel()
 {
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, vec3(0.0f, -2.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(235.0f), vec3(0.0f, 1.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(270.0f), vec3(0.0f, 1.0f, 0.0f));
 
-	prog.setUniform("Material.Rough", rough);
-	prog.setUniform("Material.Metal", metal);
-	prog.setUniform("Material.Color", color);
+	GLuint texID = Texture::loadTexture("media/ImphenziaPalette02-Albedo.png");
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texID);
 
 	setMatrices();
 	mesh->render();
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
